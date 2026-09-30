@@ -8,7 +8,7 @@ from routes.auth_routes import auth_bp
 
 
 def create_app(test_config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="public", static_url_path="")
     app.config.from_object(Config)
     if test_config:
         app.config.update(test_config)

@@ -1,4 +1,5 @@
 import base64
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,12 @@ MASTER_KEY_PATH = Path(__file__).resolve().parent.parent / "keys" / "vote_master
 
 
 def generate_vote_master_key() -> bytes:
+    configured_key = os.getenv("VOTING_MASTER_KEY")
+    if os.getenv("VERCEL"):
+        if not configured_key:
+            raise RuntimeError("VOTING_MASTER_KEY must be configured on Vercel.")
+        return hashlib.sha256(configured_key.encode("utf-8")).digest()
+
     MASTER_KEY_PATH.parent.mkdir(exist_ok=True)
     if MASTER_KEY_PATH.exists():
         return MASTER_KEY_PATH.read_bytes()

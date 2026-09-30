@@ -131,7 +131,7 @@ secure_e_voting/
 │   ├── admin_dashboard.html
 │   ├── candidates.html
 │   └── results.html
-├── static/
+├── public/
 │   ├── css/
 │   │   └── style.css
 │   ├── js/
@@ -216,7 +216,18 @@ If an error appears:
 - Ensure dependencies are installed
 - Check the database file was created
 
-## 11. Default Admin Setup
+## 11. Deploying to Vercel
+
+The Flask application runs as a Vercel Function. Vercel's function storage is temporary, so configure a persistent PostgreSQL database before deployment; do not use the local SQLite database for a hosted election.
+
+1. Import `saravanan0345/securevoting` into Vercel and select the repository root.
+2. Create a PostgreSQL database through a Vercel Marketplace integration such as Neon, then set its connection string as `DATABASE_URL`.
+3. Add `SECRET_KEY`, `VOTING_MASTER_KEY`, and `ADMIN_PASSWORD` as Vercel environment variables. Use unique, randomly generated values; never reuse the demo defaults.
+4. Set `ADMIN_USERNAME` to `admin`. Vercel serves the files in `public/` and deploys the app on pushes to the connected branch.
+
+The app refuses to start on Vercel when the database URL or required secrets are missing. Keep the database and encryption key stable so stored votes remain readable after function restarts.
+
+## 12. Default Admin Setup
 
 This project creates a default admin user automatically.
 
@@ -227,7 +238,7 @@ Admin login values:
 Admin route:
 - `http://127.0.0.1:5000/admin/login`
 
-## 12. Demo Data
+## 13. Demo Data
 
 The app creates sample data automatically on first run:
 - 1 active election
@@ -242,7 +253,7 @@ Sample voter login values:
 
 You can delete the database file and restart to reset the demo data.
 
-## 13. Testing Steps
+## 14. Testing Steps
 
 Run this command from the project folder:
 
@@ -265,7 +276,7 @@ This verifies:
 - Result generation
 - Security checks
 
-## 14. Security Explanation
+## 15. Security Explanation
 
 This project uses:
 
@@ -283,7 +294,7 @@ Important limitation:
 - This demo is for learning and college presentation only.
 - Real production systems must use HTTPS/TLS, proper certificate management, protected infrastructure, and a full security-review process.
 
-## 15. Limitations
+## 16. Limitations
 
 This demo is educational and has limitations:
 - It is not designed for real public elections
@@ -292,7 +303,7 @@ This demo is educational and has limitations:
 - It is not built for massive-scale election systems
 - It is not suitable for government or legal voting
 
-## 16. Future Enhancements
+## 17. Future Enhancements
 
 Possible upgrades:
 - Real HTTPS deployment with certificates
@@ -304,7 +315,7 @@ Possible upgrades:
 - Real multi-user deployment with PostgreSQL
 - Frontend and backend separation with React or Vue
 
-## 17. Viva Questions and Answers
+## 18. Viva Questions and Answers
 
 Q1: What is the role of RSA in this project?
 A: RSA is used for signing voting transactions and verifying the signature before the vote is accepted.
@@ -321,7 +332,7 @@ A: AES-GCM provides confidentiality and authentication for the encrypted vote da
 Q5: What is the difference between demo project and real election system?
 A: This demo teaches the concepts, while real election systems need legal, operational, cryptographic, and infrastructure safeguards.
 
-## 18. PPT Explanation Points
+## 19. PPT Explanation Points
 
 1. Project overview and objectives
 2. Why secure voting matters
@@ -334,7 +345,7 @@ A: This demo teaches the concepts, while real election systems need legal, opera
 9. Demo data setup
 10. Security limitations and real-world notes
 
-## 19. Useful Notes
+## 20. Useful Notes
 
 - To reset the demo app, delete `database/secure_voting.db`
 - To regenerate keys, delete the files in `keys/`
@@ -342,6 +353,6 @@ A: This demo teaches the concepts, while real election systems need legal, opera
 - Use the voter page at `/login`
 - This project is for demonstration and learning
 
-## 20. Final Note
+## 21. Final Note
 
 This is a secure demo voting system made for educational purposes. It is a strong learning project for college presentations and cybersecurity studies, but it is not a production-ready public election platform.

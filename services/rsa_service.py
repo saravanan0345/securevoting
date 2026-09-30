@@ -1,4 +1,5 @@
 import base64
+import os
 from pathlib import Path
 
 from cryptography.exceptions import InvalidSignature
@@ -6,7 +7,11 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key
 
-KEYS_DIR = Path(__file__).resolve().parent.parent / "keys"
+KEYS_DIR = (
+    Path("/tmp/secure-voting-keys")
+    if os.getenv("VERCEL")
+    else Path(__file__).resolve().parent.parent / "keys"
+)
 PRIVATE_KEY_PATH = KEYS_DIR / "server_private_key.pem"
 PUBLIC_KEY_PATH = KEYS_DIR / "server_public_key.pem"
 

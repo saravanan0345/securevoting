@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app
 from models.models import Candidate, Election, User, Vote, db
+from services.aes_service import generate_vote_master_key
 
 
 @pytest.fixture()
@@ -63,6 +64,23 @@ def test_successful_registration(client):
     assert b"Registration Successful" in response.data
     assert b"Go to Login" in response.data
     assert b"DEMO" in response.data
+
+
+def test_public_assets_are_served(client):
+    response = client.get("/css/style.css")
+    assert response.status_code == 200
+    assert b"min-height: 100vh" in response.data
+
+
+def test_vercel_vote_key_is_stable(monkeypatch):
+    monkeypatch.setenv("VERCEL", "1")
+    monkeypatch.setenv("VOTING_MASTER_KEY", "test-deployment-master-secret")
+
+    first_key = generate_vote_master_key()
+    second_key = generate_vote_master_key()
+
+    assert len(first_key) == 32
+    assert first_key == second_key
 
 
 def test_duplicate_registration(client):
