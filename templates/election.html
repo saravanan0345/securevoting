@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Election | SecureVote{% endblock %}
+
+{% block content %}
+<div class="card shadow border-0 mb-4">
+    <div class="card-body p-4">
+        <h2>{{ election.name }}</h2>
+        <p class="text-muted">{{ election.description }}</p>
+        <p><strong>Start Date:</strong> {{ election.start_date.strftime('%Y-%m-%d') }}
+            <strong class="ms-3">End Date:</strong> {{ election.end_date.strftime('%Y-%m-%d') }}</p>
+        <p><strong>Status:</strong> <span class="badge bg-success">{{ election.status }}</span></p>
+    </div>
+</div>
+
+<form method="POST" action="{{ url_for('auth.cast_vote', election_id=election.id) }}">
+    <div class="row g-4">
+        {% for candidate in candidates %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm candidate-card">
+                <div class="card-body">
+                    <div class="candidate-symbol">{{ candidate.symbol or '◉' }}</div>
+                    <h4>{{ candidate.name }}</h4>
+                    <p class="text-muted mb-3">{{ candidate.party }}</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="candidate_id" value="{{ candidate.id }}" id="candidate-{{ candidate.id }}" required>
+                        <label class="form-check-label" for="candidate-{{ candidate.id }}">Select this candidate</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4 text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Confirm Vote</button>
+    </div>
+</form>
+{% endblock %}

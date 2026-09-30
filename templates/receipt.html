@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Vote Receipt | SecureVote{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <h2 class="text-success">✅ Vote Acknowledgement</h2>
+                    <p class="text-muted">Your vote has been securely accepted.</p>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Voter:</strong> {{ user.name }}</div>
+                    <div class="col-md-6"><strong>Voter ID:</strong> {{ user.voter_id }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Election:</strong> {{ election.name }}</div>
+                    <div class="col-md-6"><strong>Timestamp:</strong> {{ vote.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+                </div>
+                <div class="alert alert-info">
+                    This demo stores the vote as encrypted data. The actual candidate choice is not kept in plain text in the database.
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="{{ url_for('auth.dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

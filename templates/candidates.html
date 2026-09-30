@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Candidates | SecureVote{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Candidate Management</h2>
+    <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-outline-light">Back to dashboard</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-dark align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Party</th>
+                <th>Symbol</th>
+                <th>Election</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate in candidates %}
+            <tr>
+                <td>{{ candidate.id }}</td>
+                <td>{{ candidate.name }}</td>
+                <td>{{ candidate.party }}</td>
+                <td>{{ candidate.symbol }}</td>
+                <td>{{ candidate.election.name }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('admin.delete_candidate', candidate_id=candidate.id) }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">No candidates found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

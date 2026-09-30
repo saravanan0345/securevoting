@@ -1,0 +1,82 @@
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+    color: #f8fafc;
+    min-height: 100vh;
+}
+
+.card {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #f8fafc;
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(16, 185, 129, 0.18));
+    border-radius: 1.5rem;
+}
+
+.security-panel {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.15);
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.candidate-card {
+    transition: transform 0.2s ease;
+}
+
+.candidate-card:hover {
+    transform: translateY(-3px);
+}
+
+.candidate-symbol {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+.small-box {
+    background: rgba(59, 130, 246, 0.12);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    min-height: 90px;
+}
+
+.form-control, .form-select, .form-check-input {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    color: #f8fafc;
+}
+
+.form-control::placeholder {
+    color: #94a3b8;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981, #14b8a6);
+    border: none;
+}
+
+.alert {
+    border: none;
+}
+
+.table-dark {
+    --bs-table-bg: rgba(15, 23, 42, 0.9);
+    --bs-table-color: #f8fafc;
+}
