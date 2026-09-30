@@ -4,6 +4,7 @@ import pytest
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app
+from config import get_database_url
 from models.models import Candidate, Election, User, Vote, db
 from services.aes_service import generate_vote_master_key
 
@@ -81,6 +82,13 @@ def test_vercel_vote_key_is_stable(monkeypatch):
 
     assert len(first_key) == 32
     assert first_key == second_key
+
+
+def test_neon_storage_database_url_is_supported(monkeypatch):
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.setenv("STORAGE_DATABASE_URL", "postgresql://example:secret@host/db")
+
+    assert get_database_url() == "postgresql+psycopg://example:secret@host/db"
 
 
 def test_duplicate_registration(client):

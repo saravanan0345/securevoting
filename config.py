@@ -10,7 +10,11 @@ DATABASE_DIR.mkdir(exist_ok=True)
 
 
 def get_database_url():
-    configured_url = os.getenv("DATABASE_URL")
+    configured_url = (
+        os.getenv("DATABASE_URL")
+        or os.getenv("STORAGE_DATABASE_URL")
+        or os.getenv("POSTGRES_URL")
+    )
     fallback_url = f"sqlite:///{(DATABASE_DIR / 'secure_voting.db').resolve()}"
 
     if not configured_url:
